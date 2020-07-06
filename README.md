@@ -1,3 +1,4 @@
+![img alt](https://github.com/ComputerScienceHayk/flutter_tags_list/blob/master/screen.gif)
 # tags_filter
 
 A new Flutter application.
