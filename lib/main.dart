@@ -1,0 +1,100 @@
+import 'package:filter_list/filter_list.dart';
+import 'package:flutter/material.dart';
+
+void main() => runApp(MyApp());
+
+class MyApp extends StatelessWidget {
+  // This widget is the root of your application.
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Flutter filter',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      debugShowCheckedModeBanner: false,
+      home: MyHomePage(title: 'Filter filter list'),
+    );
+  }
+}
+
+class MyHomePage extends StatefulWidget {
+  MyHomePage({Key key, this.title}) : super(key: key);
+  final String title;
+
+  @override
+  _MyHomePageState createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
+  List<String> countList = [
+    "One",
+    "Two",
+    "Three",
+    "Four",
+    "Five",
+    "Six",
+    "Seven",
+    "Eight",
+    "Nine",
+    "Ten",
+    "Eleven",
+    "Tweleve",
+    "Thirteen",
+    "Fourteen",
+    "Fifteen",
+    "Sixteen",
+    "Seventeen",
+    "Eighteen",
+    "Nineteen",
+    "Twenty"
+  ];
+  List<String> selectedCountList = [];
+
+  void _openFilterList() async {
+    var list = await FilterList.showFilterList(
+      context,
+      allTextList: countList,
+      height: 480,
+      borderRadius: 20,
+      headlineText: "Select Count",
+      searchFieldHintText: "Search Here",
+      selectedTextList: selectedCountList,
+    );
+
+    if (list != null) {
+      setState(() {
+        selectedCountList = List.from(list);
+      });
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        appBar: AppBar(
+          title: Text(widget.title),
+        ),
+        floatingActionButton: Container(
+          child: FloatingActionButton(
+            onPressed: _openFilterList,
+            tooltip: 'Increment',
+            child: Icon(Icons.add),
+            backgroundColor: Colors.green,
+          ),
+        ),
+        body: selectedCountList == null || selectedCountList.length == 0
+            ? Center(
+          child: Text('No text selected'),
+        )
+            : ListView.separated(
+            itemBuilder: (context, index) {
+              return Container(
+                child: Text(selectedCountList[index], ),
+              );
+            },
+            separatorBuilder: (context, index) => Divider(),
+            itemCount: selectedCountList.length)
+    );
+  }
+}
